@@ -15,8 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".List_Todo"
-            android:windowSoftInputMode="adjustPan"/>
-        </application>
+        <activity
+            android:name=".List_Todo"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".about"></activity>
+    </application>
 
 </manifest>

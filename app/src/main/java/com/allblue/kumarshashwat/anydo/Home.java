@@ -46,7 +46,6 @@ public class Home extends AppCompatActivity {
         alpha.add(new Todo("MOVIES",R.drawable.movies2));
         alpha.add(new Todo("SCHOOL",R.drawable.school2));
         alpha.add(new Todo("PLACES",R.drawable.places1));
-        //alpha.add(new Todo("DAILY GOALS",R.drawable.goals1));
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getBaseContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -70,10 +69,8 @@ public class Home extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
        switch(item.getItemId()){
            case R.id.action_favorite:
-               Intent i=new Intent(this,Home.class);
+               Intent i=new Intent(this,about.class);
                startActivity(i);
-               return true;
-           case R.id.action_settings:
                return true;
            default:
                return super.onOptionsItemSelected(item);
@@ -82,7 +79,6 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
