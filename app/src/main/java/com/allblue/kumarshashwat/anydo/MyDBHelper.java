@@ -24,7 +24,6 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("create table if not exists work(task text,id integer primary key)");
         db.execSQL("create table if not exists movies(task text,id integer primary key)");
         db.execSQL("create table if not exists places(task text,id integer primary key)");
-        db.execSQL("create table if not exists dailygoals(task text,id integer primary key)");
         db.execSQL("create table if not exists grocery(task text,id integer primary key)");
         db.execSQL("create table if not exists school(task text,id integer primary key)");
     }
@@ -37,7 +36,6 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS movies");
         db.execSQL("DROP TABLE IF EXISTS school");
         db.execSQL("DROP TABLE IF EXISTS places");
-        db.execSQL("DROP TABLE IF EXISTS dailygoals");
         onCreate(db);
     }
 

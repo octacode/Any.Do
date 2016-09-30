@@ -92,29 +92,30 @@ public class ListFragment extends Fragment {
         String selection=getArguments().getString("From Activity");
         assert selection != null;
         final String kop=selection.replace(" ","").trim().toLowerCase();
-        Toast.makeText(getContext(),kop,Toast.LENGTH_LONG).show();
         Cursor c=myDBHelper.myselect(kop);
         while(c.moveToNext()){
-            al.add(c.getString(0));
+            String a=(c.getString(0));
+            al.add(a);
             String integer=c.getString(1);
             ide.add(integer);
         }
         final ArrayAdapter<String> aa = new ArrayAdapter<String>(rootview.getContext(), android.R.layout.simple_list_item_1, al);
         lv.setAdapter(aa);
-
+        aa.notifyDataSetChanged();
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal=Calendar.getInstance();
                 String k=to_valve.getText().toString();
                 String date=cal.get(Calendar.DAY_OF_MONTH) + "/"
-                        + cal.get(Calendar.MONTH)
+                        + (cal.get(Calendar.MONTH)+1)
                         + "/" + cal.get(Calendar.YEAR);
                 String time=cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE);
                 Snackbar.make(getView(),k+" added on "+date+" at "+time,Snackbar.LENGTH_LONG).show();
                 ContentValues cv=new ContentValues();
                 cv.put("task",k);
                 myDBHelper.myinsert(cv,kop);
+                al.clear();ide.clear();
                 Cursor c=myDBHelper.myselect(kop);
                 while(c.moveToNext()){
                     String a=c.getString(0);
@@ -132,20 +133,20 @@ public class ListFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final String allblue=al.get(position).toString();
                 myDBHelper.getWritableDatabase().delete(kop, ide.get(position) + "=" + MyDBHelper.KEY_ID, null);
-                Snackbar.make(view,"DELETED",Snackbar.LENGTH_SHORT).setAction("UNDO", new View.OnClickListener() {
+                Snackbar.make(view,"DELETED",Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
                         ContentValues cv=new ContentValues();
-                        cv.put("UNDO",allblue);
-                        myDBHelper.getWritableDatabase().insert(kop,null,cv);
+                        cv.put("task",allblue);
+                        myDBHelper.myinsert(cv,kop);
                         al.add(allblue);
                         aa.notifyDataSetChanged();
                     }
                 }).show();
                 al.remove(position);
                 aa.notifyDataSetChanged();
-                return true;
+                return false;
             }
         });
         return rootview;
